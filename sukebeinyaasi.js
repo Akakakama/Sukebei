@@ -1,4 +1,4 @@
-export default new class SukebeiNyaa {
+export default new class SukebeiNyaaSi {
   base = 'https://sukebei.nyaa.si'
 
   async single({ titles, episode }) {
