@@ -1,3 +1,5 @@
+import AbstractSource from './abstract.js'
+
 export default new class SukebeiNyaa extends AbstractSource {
   // Base URL for Sukebei
   base = 'https://sukebei.nyaa.si'
