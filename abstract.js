@@ -1,40 +1,20 @@
-/**
- * @typedef {import('./').TorrentSource} TorrentSource
- */
-
-/**
- * @implements {TorrentSource}
- */
 export default class AbstractSource {
-  /**
-   * Gets results for single episode
-   * @type {import('./').SearchFunction}
-   */
-  single (options) {
-    throw new Error('Source doesn\'t implement single')
-  }
+  base = ''
 
-  /**
-   * Gets results for batch of episodes
-   * @type {import('./').SearchFunction}
-   */
-  batch (options) {
-    throw new Error('Source doesn\'t implement batch')
-  }
+  async single(params) { throw new Error('Not implemented') }
+  async batch(params) { return this.single(params) }
+  async movie(params) { return this.single(params) }
 
-  /**
-   * Gets results for a movie
-   * @type {import('./').SearchFunction}
-   */
-  movie (options) {
-    throw new Error('Source doesn\'t implement movie')
-  }
-
-  /**
-   * Gets results for a movie
-   * @type {()=>Promise<boolean>}
-   */
-  test () {
-    throw new Error('Source doesn\'t implement test')
+  parseSize(sizeStr) {
+    const match = String(sizeStr).match(/([\d.]+)\s*(KiB|MiB|GiB|KB|MB|GB)/i)
+    if (!match) return 0
+    const value = parseFloat(match[1])
+    const unit = match[2].toUpperCase()
+    switch (unit) {
+      case 'KIB': case 'KB': return value * 1024
+      case 'MIB': case 'MB': return value * 1024 * 1024
+      case 'GIB': case 'GB': return value * 1024 * 1024 * 1024
+      default: return 0
+    }
   }
 }
