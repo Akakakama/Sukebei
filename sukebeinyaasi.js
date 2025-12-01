@@ -1,15 +1,15 @@
-import AbstractSource from './abstract.js'
+import AbstractSource from '../abstract.js' // adjust path if needed
 
 export default new class SukebeiNyaa extends AbstractSource {
-  // Direct Sukebei Nyaa.si URL
-  base = 'https://sukebei.nyaa.si/'
+  // Base URL for Sukebei
+  base = 'https://sukebei.nyaa.si'
 
   /** @type {import('./').SearchFunction} */
   async single({ titles, episode }) {
     if (!titles?.length) return []
 
     const query = this.buildQuery(titles[0], episode)
-    const url = `${this.base}?f=0&c=0_0&q=${encodeURIComponent(query)}`
+    const url = `${this.base}/?f=0&c=0_0&q=${encodeURIComponent(query)}`
 
     const res = await fetch(url)
     if (!res.ok) return []
@@ -28,7 +28,6 @@ export default new class SukebeiNyaa extends AbstractSource {
   }
 
   parseHTML(html) {
-    // Basic HTML parsing to extract torrent entries
     const parser = new DOMParser()
     const doc = parser.parseFromString(html, 'text/html')
     const rows = Array.from(doc.querySelectorAll('table.torrent-list > tbody > tr'))
