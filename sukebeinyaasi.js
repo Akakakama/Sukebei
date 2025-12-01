@@ -1,10 +1,6 @@
-import AbstractSource from './abstract.js'
-
-export default new class SukebeiNyaa extends AbstractSource {
-  // Base URL for Sukebei
+export default new class SukebeiNyaa {
   base = 'https://sukebei.nyaa.si'
 
-  /** @type {import('./').SearchFunction} */
   async single({ titles, episode }) {
     if (!titles?.length) return []
 
@@ -61,10 +57,8 @@ export default new class SukebeiNyaa extends AbstractSource {
   parseSize(sizeStr) {
     const match = String(sizeStr).match(/([\d.]+)\s*(KiB|MiB|GiB|KB|MB|GB)/i)
     if (!match) return 0
-
     const value = parseFloat(match[1])
     const unit = match[2].toUpperCase()
-
     switch (unit) {
       case 'KIB':
       case 'KB': return value * 1024
